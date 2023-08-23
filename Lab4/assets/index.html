@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Siyu Liu's Lab4</h1>
+    <form id="upload-form" method="post">
+        <label for="upload">Select a file and Submit</label>
+        <input type="file" name="upload" id="upload" required />
+        <br>
+        <br>
+        <div>
+            <button type="submit">submit</button>
+        </div>
+    </form>
+</body>
+
+<script>
+    document.querySelector("#upload-form").addEventListener("submit", (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        fetch("/upload", {
+            method: "POST",
+            body: formData
+        }).then(res => res.json()).then(res => {
+            if (res.message === "Uploaded File Successfully") {
+                document.querySelector("#upload-form").reset()
+            }
+            alert(res.message)
+        });
+    })
+</script>
+
+</html>
